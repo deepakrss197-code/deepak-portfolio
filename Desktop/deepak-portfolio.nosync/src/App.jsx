@@ -1,16 +1,18 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, Suspense, lazy } from 'react';
 // eslint-disable-next-line no-unused-vars
 import { motion, AnimatePresence, useScroll, useSpring } from 'framer-motion';
 import useIsMobile from './hooks/useIsMobile';
 import Navbar from './components/Navbar';
 import Hero from './components/Hero';
-import About from './components/About';
-import Ambition from './components/Ambition';
-import Experience from './components/Experience';
-import Projects from './components/Projects';
-import AIAssistant from './components/AIAssistant';
-import Contact from './components/Contact';
 import CustomCursor from './components/CustomCursor';
+
+// Lazy load heavy components below the fold for faster mobile loading
+const About = lazy(() => import('./components/About'));
+const Ambition = lazy(() => import('./components/Ambition'));
+const Experience = lazy(() => import('./components/Experience'));
+const Projects = lazy(() => import('./components/Projects'));
+const AIAssistant = lazy(() => import('./components/AIAssistant'));
+const Contact = lazy(() => import('./components/Contact'));
 
 // Temporary Error Boundary to catch deep React crashes
 class ErrorBoundary extends React.Component {
