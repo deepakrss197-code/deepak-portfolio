@@ -251,8 +251,8 @@ function App() {
         <main className="px-6 md:px-12 lg:px-24">
           {/* Feature 4: Component Mount Glitch-In wrapper for main content */}
           <motion.div
-            initial={{ opacity: 0, x: isMobile ? 0 : -20, filter: isMobile ? "none" : "blur(10px) hue-rotate(90deg)" }}
-            whileInView={{ opacity: 1, x: 0, filter: isMobile ? "none" : "blur(0px) hue-rotate(0deg)" }}
+            initial={{ opacity: 0, y: isMobile ? 40 : 0, x: isMobile ? 0 : -20, filter: isMobile ? "none" : "blur(10px) hue-rotate(90deg)" }}
+            whileInView={{ opacity: 1, y: 0, x: 0, filter: isMobile ? "none" : "blur(0px) hue-rotate(0deg)" }}
             viewport={{ once: true, margin: isMobile ? "0px" : "-100px" }}
             transition={{ duration: 0.5, type: "spring", bounce: 0.5 }}
           >
@@ -262,8 +262,8 @@ function App() {
           <LaserGate isMobile={isMobile} />
           
           <motion.div
-            initial={{ opacity: 0, x: isMobile ? 0 : 20, filter: isMobile ? "none" : "blur(10px) hue-rotate(-90deg)" }}
-            whileInView={{ opacity: 1, x: 0, filter: isMobile ? "none" : "blur(0px) hue-rotate(0deg)" }}
+            initial={{ opacity: 0, y: isMobile ? 40 : 0, x: isMobile ? 0 : 20, filter: isMobile ? "none" : "blur(10px) hue-rotate(-90deg)" }}
+            whileInView={{ opacity: 1, y: 0, x: 0, filter: isMobile ? "none" : "blur(0px) hue-rotate(0deg)" }}
             viewport={{ once: true, margin: isMobile ? "0px" : "-100px" }}
             transition={{ duration: 0.6, type: "spring", bounce: 0.6 }}
           >
@@ -273,8 +273,8 @@ function App() {
           <LaserGate isMobile={isMobile} />
           
           <motion.div
-            initial={{ opacity: 0, scale: isMobile ? 1 : 0.95, filter: isMobile ? "none" : "blur(10px)" }}
-            whileInView={{ opacity: 1, scale: 1, filter: isMobile ? "none" : "blur(0px)" }}
+            initial={{ opacity: 0, y: isMobile ? 30 : 0, scale: isMobile ? 1 : 0.95, filter: isMobile ? "none" : "blur(10px)" }}
+            whileInView={{ opacity: 1, y: 0, scale: 1, filter: isMobile ? "none" : "blur(0px)" }}
             viewport={{ once: true, margin: isMobile ? "0px" : "-100px" }}
             transition={{ duration: 0.8, type: "spring", bounce: 0.5 }}
           >
@@ -306,8 +306,8 @@ function App() {
           <LaserGate isMobile={isMobile} />
 
           <motion.div
-            initial={{ opacity: 0, scale: isMobile ? 1 : 1.1, filter: isMobile ? "none" : "blur(20px)" }}
-            whileInView={{ opacity: 1, scale: 1, filter: isMobile ? "none" : "blur(0px)" }}
+            initial={{ opacity: 0, y: isMobile ? 30 : 0, scale: isMobile ? 1 : 1.1, filter: isMobile ? "none" : "blur(20px)" }}
+            whileInView={{ opacity: 1, y: 0, scale: 1, filter: isMobile ? "none" : "blur(0px)" }}
             viewport={{ once: true, margin: isMobile ? "0px" : "-50px" }}
             transition={{ duration: 0.9 }}
           >

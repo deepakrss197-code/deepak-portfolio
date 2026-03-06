@@ -99,7 +99,7 @@ const GlitchText = ({ text }) => {
 };
 
 // Premium Staggered Text Reveal
-const StaggeredText = ({ text, className }) => {
+const StaggeredText = ({ text, className, isMobile }) => {
   const words = text.split(" ");
   
   const container = {
@@ -116,7 +116,7 @@ const StaggeredText = ({ text, className }) => {
       y: 0,
       rotateX: 0,
       scale: 1,
-      filter: "blur(0px)",
+      filter: isMobile ? "none" : "blur(0px)",
       transition: {
         type: "spring",
         damping: 12,
@@ -125,10 +125,10 @@ const StaggeredText = ({ text, className }) => {
     },
     hidden: {
       opacity: 0,
-      y: 40,
-      rotateX: -45,
-      scale: 0.9,
-      filter: "blur(8px)",
+      y: isMobile ? 20 : 40,
+      rotateX: isMobile ? 0 : -45,
+      scale: isMobile ? 1 : 0.9,
+      filter: isMobile ? "none" : "blur(8px)",
       transition: {
         type: "spring",
         damping: 12,
@@ -302,7 +302,7 @@ const Hero = () => {
                     
                     <h1 className="text-4xl md:text-5xl lg:text-7xl font-bold mb-8 leading-[1.1] tracking-tighter drop-shadow-[0_0_30px_rgba(0,255,159,0.2)]">
                       <span className="block mb-2"><GlitchText text="Hi, I'm Deepak" /></span>
-                      <StaggeredText text="CSE Student & Software Engineer" className="text-xl md:text-3xl lg:text-4xl text-gray-300 font-light tracking-wide mt-6 block" />
+                      <StaggeredText isMobile={isMobile} text="CSE Student & Software Engineer" className="text-xl md:text-3xl lg:text-4xl text-gray-300 font-light tracking-wide mt-6 block" />
                     </h1>
                     
                     <motion.p 

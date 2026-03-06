@@ -24,7 +24,7 @@ const WordReveal = ({ text, className, isMobile }) => {
           key={i}
           className="inline-block mr-1"
           variants={{
-            hidden: { opacity: 0, y: isMobile ? 0 : 10, filter: isMobile ? "none" : "blur(4px)" },
+            hidden: { opacity: 0, y: isMobile ? 5 : 10, filter: isMobile ? "none" : "blur(4px)" },
             visible: { 
               opacity: 1, 
               y: 0, 
@@ -172,7 +172,10 @@ const About = () => {
         
         {/* Dynamic Plunging Header */}
         <motion.div
-          style={isMobile ? {} : { y: plungeY, scale: plungeScale, opacity: plungeOpacity }}
+          style={isMobile ? {} : { y: plungeY, scale: plungeScale }}
+          initial={isMobile ? { opacity: 0, y: 30 } : { opacity: plungeOpacity }}
+          whileInView={isMobile ? { opacity: 1, y: 0 } : {}}
+          transition={isMobile ? { duration: 0.6, ease: "easeOut" } : {}}
           className="mb-24 flex flex-col items-center justify-center text-center"
         >
           <div className="flex items-center gap-6 mb-6">
@@ -190,10 +193,10 @@ const About = () => {
           {/* Bio text - Sharp Reveal */}
           <motion.div
             style={isMobile ? {} : { y: textY }}
-            initial={{ opacity: 0 }}
-            whileInView={{ opacity: 1 }}
-            viewport={{ once: true, margin: "-100px" }}
-            transition={{ duration: 0.8 }}
+            initial={{ opacity: 0, y: isMobile ? 40 : 0 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true, margin: isMobile ? "-30px" : "-100px" }}
+            transition={{ duration: 0.8, ease: "easeOut" }}
             className="space-y-8 relative"
           >
             {/* Sharp accent line */}
@@ -282,7 +285,13 @@ const About = () => {
           </motion.div>
 
           {/* Right Column - Skills Card */}
-          <motion.div style={{ y: cardY }}>
+          <motion.div 
+            style={isMobile ? {} : { y: cardY }}
+            initial={isMobile ? { opacity: 0, y: 50 } : { opacity: 1 }}
+            whileInView={isMobile ? { opacity: 1, y: 0 } : { opacity: 1 }}
+            transition={isMobile ? { duration: 0.7, ease: "easeOut", delay: 0.2 } : {}}
+            viewport={{ once: true, margin: isMobile ? "-30px" : "0px" }}
+          >
              <HolographicCard className="backdrop-blur-2xl bg-[#080808]/90 border border-white/5 p-10 overflow-hidden shadow-[0_30px_60px_rgba(0,0,0,0.8)] hover:border-[#00ff9f]/50 transition-colors duration-700">
                {/* Sharp Corner Accents */}
                <div style={{ transform: "translateZ(20px)" }} className="absolute top-0 left-0 w-8 h-8 border-t-2 border-l-2 border-[#00ff9f]/50 pointer-events-none z-20"></div>

@@ -1,9 +1,10 @@
 import React, { useRef, useState } from 'react';
 // eslint-disable-next-line no-unused-vars
 import { motion, useScroll, useTransform } from 'framer-motion';
+import useIsMobile from '../hooks/useIsMobile';
 
 // Premium Word-by-Word Reveal on Scroll
-const WordReveal = ({ text, className }) => {
+const WordReveal = ({ text, className, isMobile }) => {
   const words = text.split(" ");
   return (
     <motion.p
@@ -20,11 +21,11 @@ const WordReveal = ({ text, className }) => {
           key={i}
           className="inline-block mr-1"
           variants={{
-            hidden: { opacity: 0, y: 10, filter: "blur(4px)" },
+            hidden: { opacity: 0, y: 10, filter: isMobile ? "none" : "blur(4px)" },
             visible: { 
               opacity: 1, 
               y: 0, 
-              filter: "blur(0px)",
+              filter: isMobile ? "none" : "blur(0px)",
               transition: { type: "spring", stiffness: 100, damping: 20 }
             }
           }}
@@ -83,12 +84,12 @@ const HolographicCard = ({ children, className }) => {
   );
 };
 
-const Milestone = ({ year, title, subtitle, description, isLeft }) => {
+const Milestone = ({ year, title, subtitle, description, isLeft, isMobile }) => {
   return (
     <motion.div 
-      initial={{ opacity: 0, x: isLeft ? -50 : 50, y: 30 }}
+      initial={{ opacity: 0, x: isMobile ? 0 : (isLeft ? -50 : 50), y: isMobile ? 30 : 30 }}
       whileInView={{ opacity: 1, x: 0, y: 0 }}
-      viewport={{ once: true, margin: "-100px" }}
+      viewport={{ once: true, margin: isMobile ? "-20px" : "-100px" }}
       transition={{ duration: 0.8, type: "spring", bounce: 0.4 }}
       className={`relative flex items-center justify-between w-full mb-16 ${isLeft ? 'flex-row-reverse' : ''}`}
     >
@@ -121,6 +122,7 @@ const Milestone = ({ year, title, subtitle, description, isLeft }) => {
             <WordReveal 
               className="text-gray-300 leading-relaxed font-light text-sm md:text-base"
               text={description}
+              isMobile={isMobile}
             />
           </div>
         </HolographicCard>
@@ -131,6 +133,7 @@ const Milestone = ({ year, title, subtitle, description, isLeft }) => {
 
 const Experience = () => {
   const containerRef = useRef(null);
+  const isMobile = useIsMobile();
   const { scrollYProgress } = useScroll({
     target: containerRef,
     offset: ["start end", "end start"]
@@ -212,7 +215,7 @@ const Experience = () => {
 
           <div className="flex flex-col relative z-20 pl-8 md:pl-0 border-l-2 border-[#00ff9f]/20 md:border-none">
             {experiences.map((exp, index) => (
-              <Milestone key={index} {...exp} />
+              <Milestone key={index} {...exp} isMobile={isMobile} />
             ))}
           </div>
         </div>
