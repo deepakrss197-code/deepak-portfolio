@@ -1,6 +1,7 @@
 import React, { useEffect, useState, useRef } from 'react';
 // eslint-disable-next-line no-unused-vars
 import { motion, useSpring, useMotionValue, AnimatePresence } from 'framer-motion';
+import useIsMobile from '../hooks/useIsMobile';
 
 const CustomCursor = () => {
   const [isHovering, setIsHovering] = useState(false);
@@ -11,8 +12,10 @@ const CustomCursor = () => {
   
   // Track primary cursor absolute position
   const mousePos = useRef({ x: -100, y: -100 });
+  const isMobile = useIsMobile();
 
   useEffect(() => {
+    if (isMobile) return;
     const updateMousePos = (e) => {
       mousePos.current = { x: e.clientX, y: e.clientY };
     };
@@ -53,10 +56,11 @@ const CustomCursor = () => {
       window.removeEventListener('mousedown', handleMouseDown);
       window.removeEventListener('mouseup', handleMouseUp);
     };
-  }, []);
+  }, [isMobile]);
 
   // RAF loop for buttery smooth physics trail computation
   useEffect(() => {
+    if (isMobile) return;
     const animateTrail = () => {
       setTrail((prevTrail) => {
         const newTrail = [...prevTrail];
@@ -81,7 +85,7 @@ const CustomCursor = () => {
 
     requestRef.current = requestAnimationFrame(animateTrail);
     return () => cancelAnimationFrame(requestRef.current);
-  }, []);
+  }, [isMobile]);
 
   // Primary spring for the main reticle
   const springConfig = { damping: 25, stiffness: 400, mass: 0.2 };
@@ -100,6 +104,8 @@ const CustomCursor = () => {
     dotX.set(mousePos.current.x);
     dotY.set(mousePos.current.y);
   }, [trail[0], smoothX, smoothY, dotX, dotY]);
+
+  if (isMobile) return null;
 
   return (
     <>

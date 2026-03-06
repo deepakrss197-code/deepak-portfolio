@@ -119,55 +119,62 @@ const ParticleVortex = () => {
 };
 
 const Background3D = () => {
+  const isMobile = useIsMobile();
+
   return (
     <div className="absolute inset-0 z-0 pointer-events-none opacity-[0.85] mix-blend-screen bg-[#020202]">
-      <Canvas
-        dpr={[1, 1.5]}
-        eventSource={
-          typeof window !== "undefined"
-            ? document.getElementById("root")
-            : undefined
-        }
-        eventPrefix="client"
-        camera={{ position: [0, 5, 12], fov: 50 }}
-        gl={{ antialias: true, alpha: true }}
-      >
-        <fog attach="fog" args={["#020202", 5, 25]} />
-        <ambientLight intensity={0.2} />
+      {/* Feature 15: Hardware WebGL Check for Smartphones */}
+      {isMobile ? (
+        <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,_rgba(0,255,159,0.15)_0%,_transparent_60%)] animate-pulse" />
+      ) : (
+        <Canvas
+          dpr={[1, 1.5]}
+          eventSource={
+            typeof window !== "undefined"
+              ? document.getElementById("root")
+              : undefined
+          }
+          eventPrefix="client"
+          camera={{ position: [0, 5, 12], fov: 50 }}
+          gl={{ antialias: true, alpha: true, powerPreference: "high-performance" }}
+        >
+          <fog attach="fog" args={["#020202", 5, 25]} />
+          <ambientLight intensity={0.2} />
 
-        {/* Extreme Cinematic Lighting */}
-        <directionalLight
-          position={[0, -10, 0]}
-          intensity={5}
-          color="#00ff9f"
-        />
+          {/* Extreme Cinematic Lighting */}
+          <directionalLight
+            position={[0, -10, 0]}
+            intensity={5}
+            color="#00ff9f"
+          />
 
-        {/* White-Hot Core Light */}
-        <pointLight
-          position={[0, 0, 0]}
-          intensity={10}
-          color="#ffffff"
-          distance={4}
-        />
+          {/* White-Hot Core Light */}
+          <pointLight
+            position={[0, 0, 0]}
+            intensity={10}
+            color="#ffffff"
+            distance={4}
+          />
 
-        {/* Neon Green Ambient Bloom Light */}
-        <pointLight
-          position={[0, 2, 0]}
-          intensity={8}
-          color="#00ff9f"
-          distance={10}
-        />
+          {/* Neon Green Ambient Bloom Light */}
+          <pointLight
+            position={[0, 2, 0]}
+            intensity={8}
+            color="#00ff9f"
+            distance={10}
+          />
 
-        <spotLight
-          position={[5, 12, 5]}
-          angle={0.8}
-          penumbra={1}
-          intensity={4}
-          color="#ffffff"
-        />
+          <spotLight
+            position={[5, 12, 5]}
+            angle={0.8}
+            penumbra={1}
+            intensity={4}
+            color="#ffffff"
+          />
 
-        <ParticleVortex />
-      </Canvas>
+          <ParticleVortex />
+        </Canvas>
+      )}
     </div>
   );
 };
