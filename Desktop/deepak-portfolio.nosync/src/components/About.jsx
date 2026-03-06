@@ -223,6 +223,7 @@ const About = () => {
                    <img 
                       src="/profile.png?v=2" 
                       alt="Deepak Kumar" 
+                      loading="lazy"
                       className="w-full h-full object-cover opacity-60 group-hover:opacity-100 group-hover:scale-110 transition-all duration-700 filter contrast-125 grayscale group-hover:grayscale-0"
                       onError={(e) => {
                         e.target.onerror = null; 

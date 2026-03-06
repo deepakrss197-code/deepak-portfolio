@@ -48,21 +48,23 @@ class ErrorBoundary extends React.Component {
   }
 }
 
-// Premium Global Spotlight Effect
-const GlobalSpotlight = () => {
+const GlobalSpotlight = ({ isMobile }) => {
   const [mousePosition, setMousePosition] = useState({ x: 0, y: 0 });
 
   useEffect(() => {
+    if (isMobile) return;
     const updateMousePosition = (e) => {
       setMousePosition({ x: e.clientX, y: e.clientY });
     };
     window.addEventListener("mousemove", updateMousePosition);
     return () => window.removeEventListener("mousemove", updateMousePosition);
-  }, []);
+  }, [isMobile]);
+
+  if (isMobile) return null;
 
   return (
     <div 
-      className="pointer-events-none fixed inset-0 z-30 transition-opacity duration-300"
+      className="pointer-events-none fixed inset-0 z-30 transition-opacity duration-300 hidden md:block"
       style={{
         background: `radial-gradient(600px circle at ${mousePosition.x}px ${mousePosition.y}px, rgba(0, 255, 159, 0.03), transparent 80%)`
       }}
@@ -219,15 +221,20 @@ function App() {
 
   return (
     <div className="min-h-screen bg-[#0a0a0a] text-gray-200 font-mono selection:bg-[#00ff9f] selection:text-black relative">
-      {/* V4 Phase 1 Global Overlays */}
-      <div className="crt-overlay"></div>
-      <div className="analog-noise"></div>
+      {/* V4 Phase 1 Global Overlays - Desktop Only to prevent massive phone repaints */}
+      {!isMobile && (
+        <>
+           <div className="crt-overlay hidden md:block"></div>
+           <div className="analog-noise hidden md:block"></div>
+        </>
+      )}
       
       {/* V4 Phase 2 Global Physics elements */}
       {!isMobile && <FloatingHexagons />}
 
       {!isMobile && <CustomCursor />}
-      <GlobalSpotlight />
+      
+      <GlobalSpotlight isMobile={isMobile} />
       <ScrollProgressBar />
       
       <AnimatePresence>
